@@ -17,7 +17,7 @@ minify:
 params:
   homeInfoParams:
     Title: "Hi sob \U0001F44B"
-    Content: Selamat datang di blog saya
+    Content: Nama saya Reza, tinggal 🇮🇩. Saya suka belajar bahasa pemrograman, terutama sebagai front-end developer. Bahasa pemrograman favorit saya adalah JavaScript. Selain itu, saya juga menyukai fotografi dan kegiatan alam, seperti mendaki atau berkebun..
 
   SocialIcons:
     - name: twitter
