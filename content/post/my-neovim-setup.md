@@ -3,6 +3,8 @@ title: "My Neovim Setup (Konfigurasi Neovim untuk Web Development)"
 date: 2023-03-22T11:44:12+07:00
 draft: false
 weight: 1
+categories: ["Programming"]
+tags: ["Neovim"]
 ---
 
 Konfigurasi ini kebanyakan saya mengambil contoh dari artikel yang di tulis oleh Takuya Matsuyama. Bisa sobat cek langsung [disini](https://dev.to/craftzdog/my-neovim-setup-for-react-typescript-tailwind-css-etc-58fb).
