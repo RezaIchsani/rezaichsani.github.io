@@ -132,7 +132,7 @@ keymap.set('n', '<C-w><down>', '<C-w>-')
 
 Kemudian buat file `init.lua` di `.config/nvim/init.lua` untuk me-load pengaturan yang sudah dibuat (diatas) agar dapat bekerja di neovim.
 
-```lua
+```
 require('base')
 require('maps')
 require('highlights')
