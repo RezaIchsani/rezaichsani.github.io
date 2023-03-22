@@ -687,8 +687,464 @@ use 'norcalli/nvim-colorizer.lua'
 Buat file `colorizer.rc.lua` di `.config/nvim/after/plugin/`.
 
 ```
+local status, colorizer = pcall(require, 'colorizer')
+if (not status) then return end
+
+colorizer.setup {
+  '*';
+}
+```
+
+## Install lspsaga
 
 ```
+use 'glepnir/lspsaga.nvim'
+```
+
+Buat file `lspsaga.rc.lua` di `.config/nvim/plugins/lspsaga.rc.lua`.
+
+```
+local status, lspsaga = pcall(require, 'lspsaga')
+if (not status) then return end
+
+--require('lspsaga').setup({})
+lspsaga.setup {
+  server_filetype_map = {
+    typescript = 'typescript'
+  }
+}
+
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<C-j>', '<Cmd>Lspsaga diagnostic_jump_netx<CR>', opts)
+vim.keymap.set('n', 'K', '<Cmd>Lspsaga hover_doc<CR>', opts)
+vim.keymap.set('n', 'gd', '<Cmd>Lspsaga lsp_finder<CR>', opts)
+vim.keymap.set('i', '<C-k>', '<Cmd>Lspsaga signature_help<CR>', opts)
+vim.keymap.set('n', 'gp', '<Cmd>Lspsaga preview_definition<CR>', opts)
+vim.keymap.set('n', 'gr', '<Cmd>Lspsaga rename<CR>', opts)
+```
+
+## Install prettier & null-ls
+
+Pertama install [prettierd](https://github.com/fsouza/prettierd) terlebih dahulu menggunakan npm ataupun homebrew.
+
+```
+npm install -g @fsouza/prettierd
+```
+```
+brew install fsouza/prettierd/prettierd
+```
+
+Kemudian install prettier dan null-ls dengan packer.
+
+```
+  use 'jose-elias-alvarez/null-ls.nvim'
+  use 'MunifTanjim/prettier.nvim' 
+```
+
+Buat file `null-ls.rc.lua` dan `prettier.rc.lua`.
+
+**null-ls.rc.lua** :
+
+```
+local status, null_ls = pcall(require, 'null_ls')
+if (not status) then return end
+
+null_ls.setup({
+  on_attach = function(client, bufnr)
+    if client.server_capabilities.documentFormattingProvider then
+      vim.api.nvim_command [[augroup Format]]
+      vim.api.nvim_command [[autocmd! * <buffer>]]
+      vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+      vim.api.nvim_command [[augroup END]]
+    end
+  end,
+  sources = {
+    null_ls.builtins.diagnostics.eslint_d.with({
+      diagnostics_format = '[eslint] #{m}\n(#{c})'
+    }),
+    null_ls.builtins.diagnostics.fish
+  }
+})
+```
+
+**prettier.rc.lua** :
+
+```
+local status, prettier = pcall(require, 'prettier')
+if (not status) then return end
+
+prettier.setup {
+  bin = 'prettierd',
+  filetypes = {
+    'html',
+    'css',
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'json',
+    'scss',
+    'less'
+  }
+}
+```
+
+## Install gitsigns
+
+```
+use 'lewis6991/gitsigns.nvim'
+```
+
+Buat file `gitsigns.rc.lua` di `.config/nvim/after/plugin/gitsigns.rc.lua`.
+
+```
+local status, gitsigns = pcall(require, 'gitsigns')
+if (not status) then return end
+
+require('gitsigns').setup{
+  signs = {
+    add          = { text = '│' },
+    change       = { text = '│' },
+    delete       = { text = '_' },
+    topdelete    = { text = '‾' },
+    changedelete = { text = '~' },
+    untracked    = { text = '┆' },
+  },
+}
+```
+
+## Install git
+
+```
+use 'dinhhuy258/git.nvim'
+```
+
+Buat file `git.rc.lua` di `.config/nvim/after/plugin/git.rc.lua`.
+
+```
+local status, git = pcall(require, 'git')
+if (not status) then return end
+
+git.setup({
+  keymaps = {
+    -- Open blame window
+    blame = '<Leader>gb',
+    -- Open file/folder in git repository
+    browse = '<Leader>go',
+  }
+})
+```
+
+## Install mason (portable package manager)
+
+```
+use 'williamboman/mason.nvim'
+use 'williamboman/mason-lspconfig.nvim'
+```
+
+Buat file `mason.rc.lua` di `.config/nvim/after/plugin/mason.rc.lua`.
+
+```
+local status, mason = pcall(require, 'mason')
+if (not status) then return end
+local status2, lspconfig = pcall(require, 'mason-lspconfig')
+if (not status) then return end
+
+mason.setup({
+
+})
+
+lspconfig.setup {
+  ensure_installed = { 'tailwindcss' },
+}
+```
+
+Yaps.. sampai disini, semua plugin untuk kebutuhan web development sudah terinstall semua.
+
+Berikut ini adalah beberapa plugin tambahan yang saya tambah agar semakin lengkap.
+
+## Neotree
+
+```
+use {
+  'nvim-neo-tree/neo-tree.nvim',
+  branch = 'v2.x',
+  requires = {
+    'MunifTanjim/nui.nvim',
+  }
+}
+```
+
+Buat file `neo-tree.rc.lua` di `.config/nvim/after/plugin/neo-tree.rc.lua`.
+
+```
+local status, neotree = pcall(require, 'neo-tree')
+if (not status) then return end
+
+require('neo-tree').setup({
+  default_component_configs = {
+    container = {
+      enable_character_fade = true
+    },
+    indent = {
+      indent_size = 2,
+      padding = 1, --extra padding on left hand side
+      -- indent guides
+      with_markers = true,
+      indent_marker = '│',
+      last_indent_marker = '└',
+      highlight = 'NeoTreeIndentMarker',
+      -- expander config, needed for nesting file
+      with_expanders = 1,
+      expander_collapsed = "",
+      expander_expanded = "",
+      expander_highlight = "NeoTreeExpander",
+    },
+    icon = {
+      folder_closed = "",
+      folder_open = "",
+      folder_empty = "ﰊ",
+      default = "*",
+      highlight = "NeoTreeFileIcon"
+    },
+    modified = {
+      symbol = "[+]",
+      highlight = "NeoTreeModified",
+    },
+    name = {
+      trailing_slash = false,
+      use_git_status_colors = true,
+      highlight = "NeoTreeFileName",
+    },
+    git_status = {
+      symbols = {
+        -- Change type
+        added     = '✚',
+        modified  = '',
+        deleted   = '✖',
+        renamed   = '',
+        -- Status type
+        untracked = '',
+        ignored   = '',
+        unstaged  = '',
+        staged    = '',
+        conflict  = '',
+      }
+    },
+  },
+  window = {
+    position = 'left',
+    width = 25,
+    mapping_options = {
+      noremap = true,
+      nowait = true,
+    },
+    mappings = {
+          ["<space>"] = {
+        "toggle_node",
+        nowait = false,
+      },
+          ["<2-LeftMouse>"] = "open",
+          ["<cr>"] = "open",
+          ["<esc>"] = "revert_preview",
+          ["P"] = { "toggle_preview", config = { use_float = true } },
+          ["l"] = "focus_preview",
+          ["S"] = "open_split",
+          ["s"] = "open_vsplit",
+          ["t"] = "open_tabnew",
+          ["w"] = "open_with_window_picker",
+          ["C"] = "close_node",
+          ["z"] = "close_all_nodes",
+          ["a"] = {
+        "add",
+        config = {
+          show_path = "none"
+        }
+      },
+          ["A"] = "add_directory",
+          ["d"] = "delete",
+          ["r"] = "rename",
+          ["y"] = "copy_to_clipboard",
+          ["x"] = "cut_to_clipboard",
+          ["p"] = "paste_from_clipboard",
+          ["c"] = "copy",
+    }
+  },
+  nesting_rules = {},
+  filesystem = {
+    visible = false,
+    hide_dotfiles = true,
+    hide_gitignored = true,
+    hide_hidden = true,
+    hide_by_name = {
+      --"node_modules"
+    },
+    hide_by_pattern = {
+      --"*.meta",
+      --"*src/*/tsconfig.json",
+    },
+    always_show = {
+      --".gitignored",
+    },
+    never_show = {
+      --".DS_Store",
+      --"thumbs.db",
+    },
+    never_show_by_pattern = {
+      --".null_ls_*",
+    },
+  },
+  follow_current_file = false,
+  group_empty_dirs = false,
+  hijack_netrw_behavior = "open_default", -- "open_current", "disabled",
+  use_libuv_file_watcher = false,
+  buffers = {
+    follow_current_file = true,
+    group_empty_dirs = true,
+    show_unloaded = true,
+    window = {
+      mappings = {
+            ["bd"] = "buffer_delete",
+            ["<bs>"] = "navigate_up",
+            ["."] = "set_root",
+      }
+    },
+  },
+  git_status = {
+    window = {
+      position = "float",
+      mappings = {
+            ["A"] = "git_add_all",
+            ["gu"] = "git_unstage_file",
+            ["ga"] = "git_add_file",
+            ["gr"] = "git_revert_file",
+            ["gc"] = "git_commit",
+            ["gp"] = "git_push",
+            ["gg"] = "git_commit_and_push",
+      }
+    }
+  }
+})
+
+vim.cmd([[noremap \ :Neotree reveal<cr>]])
+```
+
+## Comment nvim
+
+```
+use {
+  'numToStr/Comment.nvim',
+  config = function()
+    require('Comment').setup()
+  end
+}
+```
+
+Buat file `comment.rc.lua` di `.config/nvim/after/plugin/comment.rc.lua`.
+
+```
+local status, Comment = pcall(require, 'Comment')
+if (not status) then return end
+
+require('Comment').setup({
+  --Add a space b/w comment and the line
+  padding = true,
+  --Whether the cursor should stay at its position
+  sticky = true,
+  --Lines to be ignored while (un)comment
+  ignore = nil,
+  --LHS of toggle mappings in Normal mode
+  toggler = {
+    --Line-comment toggle keymap
+    line = 'gcc',
+    --Block-comment toggle keymap
+    block = 'gbc',
+  },
+  opleader = {
+    --Line-comment keymap
+    line = 'gc',
+    --Block-comment keymap
+    block = 'gb',
+  },
+  --LHS of extra mappings
+  extra = {
+    --Add comment on the line above
+    above = 'gcO',
+    --Add comment on the line bellow
+    below = 'gco',
+    --Add comment at the end of line
+    eol = 'gcA',
+  },
+  --Enable keybindings
+  --Note: if given 'false' then the plugin won't create any mappings
+  mappings = {
+    --Operator-pending mapping; 'gcc' 'gbc' 'gc[count]{motion}' 'gb[count]{motion}'
+    basic = true,
+    --Extra mapping; 'gco', 'gcO', 'gcA'
+    extra = true,
+  },
+  --Function to call before (un)comment
+  pre_hook = nil,
+  --Function to call after (un)comment
+  post_hook = nil,
+})
+```
+
+## Markdown preview
+
+```
+use {
+  "iamcco/markdown-preview.nvim",
+  run = function()
+    vim.fn["mkdp#util#install"]()
+  end,
+  ft = "markdown",
+  cmd = { "MarkdownPreview" },
+  requires = { "zhaozg/vim-diagram", "aklt/plantuml-syntax" },
+}
+```
+
+Buat file `preview.rc.lua` di `.config/nvim/after/plugin/preview.rc.lua`.
+
+```
+local status, preview = pcall(require, 'markdown-preview.nvim')
+if (not status) then return end
+
+require('preview').setup {
+  mkdp_auto_start = 0
+}
+```
+
+## Mini nvim (startup)
+
+```
+use 'echasnovski/mini.nvim'
+```
+
+Buat file `mini.rc.lua` di `.config/nvim/after/plugin/mini.rc.lua`.
+
+```
+local status, starter = pcall(require, 'mini.starter')
+if (not status) then return end
+
+local starter = require('mini.starter')
+starter.setup({
+  items = {
+    starter.sections.telescope(),
+  },
+  content_hooks = {
+    starter.gen_hook.adding_bullet(),
+    starter.gen_hook.aligning('center', 'center'),
+  },
+})
+```
+
+***
+
+Itulah beberapa plugin dengan konfigurasinya yang saya gunakan di neovim saya untuk belajar web dev.
+
+Untuk source code nya bisa sobat cek langsung di github saya [neovim-setup](https://github.com/RezaIchsani/neovim-setup). Terima kasih, semoga bermanfaat :) .
+
 
 
 
