@@ -11,12 +11,16 @@ Konfigurasi ini kebanyakan saya mengambil contoh dari artikel yang di tulis oleh
 
 Hanya ada beberapa perubahan dan penambahan plugin oleh saya sendiri. Jadi konfigurasi neovim milik saya ini, tidak sepenuhnya dari ide saya pribadi. Terima kasih buat mas [Takuya Matsuyama](https://www.craftz.dog/) yang sudah membuat artikel tentang setup neovim, dimana saya sangat terbantu dengan tulisan tersebut.
 
+## 
+
 ## Apa saja yang dibutuhkan?
 
 - Neovim [install](https://github.com/neovim/neovim/wiki/Installing-Neovim).
 - Black Box (terminal linux) [install](https://gitlab.gnome.org/raggesilver/blackbox).
 - Packer.nvim (plugin manager untuk neovim) [install](https://github.com/wbthomason/packer.nvim)
 - Beberapa plugin lainnya
+
+
 
 ## Struktur direktori
 
@@ -31,6 +35,8 @@ Adapun struktur direktori yang saya gunakan adalah seperti berikut :
 ├── 📁 plugin
 └── 🇻 init.lua
 ```
+
+
 
 ## Basic konfigurasi
 
@@ -140,4 +146,226 @@ require('maps')
 require('highlights')
 require('plugins')
 ```
+
+## 
+
+## Install packer.nvim (plugin manager)
+
+Unix, Linux instalation
+
+```
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+```
+
+Lalu buat file `plugins.lua` di `.config/nvim/lua/plugins.lua`.
+
+```
+local status, packer = pcall(require, 'packer')
+if (not status) then return end
+
+vim.cmd [[packadd packer.nvim]]
+return require('packer').startup(function(use)
+  -- Packer can manage itself
+  use 'wbthomason/packer.nvim'
+
+  -- Plugin lainnya di install disini
+
+end)
+```
+
+`:PackerInstall` atau `:PackerSync` untuk menginstall packer di neovim.
+
+
+
+## Install tema (onedark.nvim)
+
+Tema yang saya gunakan untuk neovim saya adalah [onedark.nvim](https://github.com/navarasu/onedark.nvim). Sobat bisa menggunakan tema yang lain sesuai selera sobat.
+
+```
+use 'navarasu/onedark.nvim'
+```
+
+Lalu buat file konfigurasinya `onedark.rc.lua` di `.config/nvim/after/plugin/onedark.rc.lua` dengan script berikut :
+
+```
+local status, onedark = pcall(require, 'onedark')
+if (not status) then return end
+
+require('onedark').setup {
+  style = 'cool', -- Choose one 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+  transparent = true,
+  term_colors = true,
+  ending_tildes = false,        -- Show the end-of-buffer tildes.
+  cmp_itemkind_reverse = false, -- reverse item kind highlight in cmp menu
+
+  code_style = {
+    comments = 'italic',
+    keywords = 'none',
+    functions = 'none',
+    strings = 'none',
+    variables = 'none'
+  },
+
+  -- Plugins Config
+  diagnostics = {
+    darker = true,
+    undercurl = true,
+    background = true,
+  },
+}
+
+-- Enable theme
+require('onedark').load()
+```
+
+
+
+## Install lualine (status line)
+
+Lualine.nvim mirip seperti vim airline di vim. install [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) dengan packer.
+
+```
+use 'nvim-lualine/lualine.nvim'
+```
+
+Install juga [nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons) untuk icons.
+
+```
+use 'nvim-tree/nvim-web-devicons'
+```
+
+Buat file konfigurasi untuk lualine dan nvim-web-devicons di `.config/nvim/after/plugin`
+
+**lualine.rc.lua** :
+
+```
+local status, lualine = pcall(require, 'lualine')
+if (not status) then return end
+
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'solarized_dark',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
+    }
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {
+    { 
+      'diagnostics',
+      sources = { 'nvim_diagnostic' },
+      symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'},
+    },
+      'encoding', 'fileformat', 'filetype'
+    },
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
+
+```
+
+**nvim-web-devicons.rc.lua** :
+
+```
+local status, icons = pcall(require, 'nvim-web-devicons')
+if (not status) then return end
+
+icons.setup {
+  override = {},
+  default = true
+}
+
+```
+
+
+
+## Install lspconfig
+
+Install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) dengan packer :
+
+```
+use 'neovim/nvim-lspconfig'
+```
+
+Buat file konfigurasi `lspconfig.rc.lua` di `.config/nvim/plugins/lspconfig.rc.lua` :
+
+```
+local status, nvim_lsp = pcall(require, 'lspconfig')
+if (not status) then return end
+
+local protocol = require('vim.lsp.protocol')
+
+local on_attach = function(client, bufnr)
+  -- Format on save
+  if client.server_capabilities.documentFormattingProvider then
+    vim.api.nvim_command [[augroup Format]]
+    vim.api.nvim_command [[autocmd! * <buffer>]]
+    vim.api.nvim_command [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
+    vim.api.nvim_command [[augroup END]]
+  end
+end
+
+-- TypeScript & JavaScript configuration
+nvim_lsp.tsserver.setup {
+  on_attach = on_attach,
+  cmd = { "typescript-language-server", "--stdio" },
+  filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" }
+}
+
+-- Lua configuration
+nvim_lsp.lua_ls.setup {
+  on_attach = on_attach,
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- Get the language server to recognize the 'vim' global
+        globals = { 'vim'}
+      },
+
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false
+      }
+    }
+  }
+}
+
+```
+
+
+
+## Install lspkind & cmp
+
+
+
 
