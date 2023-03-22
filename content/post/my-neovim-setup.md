@@ -34,7 +34,7 @@ Adapun struktur direktori yang saya gunakan adalah seperti berikut :
 
 Buat file baru bernama `base.lua` di `.config/nvim/lua/base.lua`.
 
-```lua
+```
 vim.cmd('autocmd!')
 
 vim.scriptencoding = 'utf-8'
@@ -80,7 +80,7 @@ vim.opt.formatoptions:append { 'r' }
 
 Buat file `highlights.lua` (untuk cursor line) di `.config/nvim/lua/highlights.lua`.
 
-```lua
+```
 vim.opt.cursorline = true
 vim.opt.termguicolors = true
 vim.opt.winblend = 0
@@ -91,7 +91,7 @@ vim.opt.background = 'dark'
 
 Buat file `maps.lua` di `.config/nvim/lua/maps.lua`.
 
-```lua
+```
 local keymap = vim.keymap
 
 -- Do not yank with x
