@@ -725,6 +725,8 @@ vim.keymap.set('n', 'gr', '<Cmd>Lspsaga rename<CR>', opts)
 
 ## Install prettier & null-ls
 
+Install prettierd 
+
 Pertama install [prettierd](https://github.com/fsouza/prettierd) terlebih dahulu menggunakan npm ataupun homebrew.
 
 ```
