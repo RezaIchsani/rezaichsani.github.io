@@ -19,6 +19,8 @@ Hanya ada beberapa perubahan dan penambahan plugin oleh saya sendiri. Jadi konfi
 - Black Box (terminal linux) [install](https://gitlab.gnome.org/raggesilver/blackbox).
 - Packer.nvim (plugin manager untuk neovim) [install](https://github.com/wbthomason/packer.nvim)
 - Beberapa plugin lainnya
+- Install prettierd `$ npm install -g @fsouza/prettierd`
+- Install `lua-language-server`. Jika menggunakan Linux bisa menginstallnya menggunakan `brew install lua-language-server`
 
 
 
@@ -40,7 +42,7 @@ Adapun struktur direktori yang saya gunakan adalah seperti berikut :
 
 ## Basic konfigurasi
 
-Buat file baru bernama `base.lua` di `.config/nvim/lua/base.lua`.
+Buat file  `base.lua` di `.config/nvim/lua/base.lua`.
 
 ```
 vim.cmd('autocmd!')
@@ -186,7 +188,7 @@ Tema yang saya gunakan untuk neovim saya adalah [onedark.nvim](https://github.co
 use 'navarasu/onedark.nvim'
 ```
 
-Lalu buat file konfigurasinya `onedark.rc.lua` di `.config/nvim/after/plugin/onedark.rc.lua` dengan script berikut :
+Lalu buat file `onedark.rc.lua` di `.config/nvim/after/plugin/onedark.rc.lua`.
 
 ```
 local status, onedark = pcall(require, 'onedark')
@@ -310,13 +312,13 @@ icons.setup {
 
 ## Install lspconfig
 
-Install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) dengan packer :
+Install [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig):
 
 ```
 use 'neovim/nvim-lspconfig'
 ```
 
-Buat file konfigurasi `lspconfig.rc.lua` di `.config/nvim/plugins/lspconfig.rc.lua` :
+Buat file `lspconfig.rc.lua` di `.config/nvim/plugins/lspconfig.rc.lua` :
 
 ```
 local status, nvim_lsp = pcall(require, 'lspconfig')
@@ -484,7 +486,7 @@ use 'windwp/nvim-ts-autotag'
 use 'windwp/nvim-autopairs'
 ```
 
-Buat file konfigurasi di `.config/nvim/after/plugin/` dengan nama `ts-autotag.rc.lua` dan `autopairs.rc.lua`.
+Buat file di `.config/nvim/after/plugin/` dengan nama `ts-autotag.rc.lua` dan `autopairs.rc.lua`.
 
 **ts-autotag.rc.lua**
 
@@ -725,15 +727,10 @@ vim.keymap.set('n', 'gr', '<Cmd>Lspsaga rename<CR>', opts)
 
 ## Install prettier & null-ls
 
-Install prettierd 
-
 Pertama install [prettierd](https://github.com/fsouza/prettierd) terlebih dahulu menggunakan npm ataupun homebrew.
 
 ```
 npm install -g @fsouza/prettierd
-```
-```
-brew install fsouza/prettierd/prettierd
 ```
 
 Kemudian install prettier dan null-ls dengan packer.
@@ -1115,30 +1112,6 @@ if (not status) then return end
 require('preview').setup {
   mkdp_auto_start = 0
 }
-```
-
-## Mini nvim (startup)
-
-```
-use 'echasnovski/mini.nvim'
-```
-
-Buat file `mini.rc.lua` di `.config/nvim/after/plugin/mini.rc.lua`.
-
-```
-local status, starter = pcall(require, 'mini.starter')
-if (not status) then return end
-
-local starter = require('mini.starter')
-starter.setup({
-  items = {
-    starter.sections.telescope(),
-  },
-  content_hooks = {
-    starter.gen_hook.adding_bullet(),
-    starter.gen_hook.aligning('center', 'center'),
-  },
-})
 ```
 
 ***
