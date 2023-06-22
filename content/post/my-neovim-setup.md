@@ -1,17 +1,17 @@
 ---
-title: "My Neovim Setup (Konfigurasi Neovim untuk Web Development)"
+title: 'My Neovim Setup (Konfigurasi Neovim untuk Web Development)'
 date: 2023-03-22T11:44:12+07:00
 draft: false
 weight: 1
-categories: ["Programming"]
-tags: ["Neovim"]
+categories: ['Programming']
+tags: ['Neovim']
 ---
 
 Konfigurasi ini kebanyakan saya mengambil contoh dari artikel yang di tulis oleh Takuya Matsuyama. Bisa sobat cek langsung [disini](https://dev.to/craftzdog/my-neovim-setup-for-react-typescript-tailwind-css-etc-58fb).
 
 Hanya ada beberapa perubahan dan penambahan plugin oleh saya sendiri. Jadi konfigurasi neovim milik saya ini, tidak sepenuhnya dari ide saya pribadi. Terima kasih buat mas [Takuya Matsuyama](https://www.craftz.dog/) yang sudah membuat artikel tentang setup neovim, dimana saya sangat terbantu dengan tulisan tersebut.
 
-## 
+##
 
 ## Apa saja yang dibutuhkan?
 
@@ -21,8 +21,6 @@ Hanya ada beberapa perubahan dan penambahan plugin oleh saya sendiri. Jadi konfi
 - Beberapa plugin lainnya
 - Install prettierd `$ npm install -g @fsouza/prettierd`
 - Install `lua-language-server`. Jika menggunakan Linux bisa menginstallnya menggunakan `brew install lua-language-server`
-
-
 
 ## Struktur direktori
 
@@ -38,11 +36,9 @@ Adapun struktur direktori yang saya gunakan adalah seperti berikut :
 └── 🇻 init.lua
 ```
 
-
-
 ## Basic konfigurasi
 
-Buat file  `base.lua` di `.config/nvim/lua/base.lua`.
+Buat file `base.lua` di `.config/nvim/lua/base.lua`.
 
 ```
 vim.cmd('autocmd!')
@@ -149,7 +145,7 @@ require('highlights')
 require('plugins')
 ```
 
-## 
+##
 
 ## Install packer.nvim (plugin manager)
 
@@ -177,8 +173,6 @@ end)
 ```
 
 `:PackerInstall` atau `:PackerSync` untuk menginstall packer di neovim.
-
-
 
 ## Install tema (onedark.nvim)
 
@@ -220,8 +214,6 @@ require('onedark').setup {
 -- Enable theme
 require('onedark').load()
 ```
-
-
 
 ## Install lualine (status line)
 
@@ -269,7 +261,7 @@ require('lualine').setup {
     lualine_b = {'branch', 'diff', 'diagnostics'},
     lualine_c = {'filename'},
     lualine_x = {
-    { 
+    {
       'diagnostics',
       sources = { 'nvim_diagnostic' },
       symbols = {error = 'E', warn = 'W', info = 'I', hint = 'H'},
@@ -307,8 +299,6 @@ icons.setup {
 }
 
 ```
-
-
 
 ## Install lspconfig
 
@@ -363,8 +353,6 @@ nvim_lsp.lua_ls.setup {
 }
 
 ```
-
-
 
 ## Install lspkind & cmp
 
@@ -477,8 +465,6 @@ Kemudian install `luasnip` agar konfigurasi diatas dapat berjalan dengan normal.
 use 'L3MON4D3/LuaSnip'
 ```
 
-
-
 ## Install ts-autotag & autopairs
 
 ```
@@ -507,8 +493,6 @@ autopairs.setup({
   disable_filetype = { 'TelescopePrompt', 'vim' },
 })
 ```
-
-
 
 ## Install treesitter
 
@@ -554,8 +538,6 @@ ts.setup {
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.tsx.filetype_to_parsername = { "javascript", "typescript.tsx" }
 ```
-
-
 
 ## Install telescope (fuzzy finder)
 
@@ -627,8 +609,6 @@ vim.keymap.set('n', ';e', '<cmd>lua require("telescope.builtin").diagnostics()<c
 vim.keymap.set('n', 'sf', '<cmd>lua require("telescope").extensions.file_browser.file_browser({ path = "%:p:h", cwd = telescope_buffer_dir(), respect_git_ignore = false, hidden = true, grouped = true, previewer = false, initial_mode = "normal", layout_config = { height = 40 } } )<cr>',
   opts)
 ```
-
-
 
 ## Install bufferline (tab)
 
@@ -737,7 +717,7 @@ Kemudian install prettier dan null-ls dengan packer.
 
 ```
   use 'jose-elias-alvarez/null-ls.nvim'
-  use 'MunifTanjim/prettier.nvim' 
+  use 'MunifTanjim/prettier.nvim'
 ```
 
 Buat file `null-ls.rc.lua` dan `prettier.rc.lua`.
@@ -1114,29 +1094,8 @@ require('preview').setup {
 }
 ```
 
-***
+---
 
 Itulah beberapa plugin dengan konfigurasinya yang saya gunakan di neovim saya untuk belajar web dev.
 
-Untuk source code nya bisa sobat cek langsung di github saya [neovim-setup](https://github.com/RezaIchsani/neovim-setup). Terima kasih, semoga bermanfaat :) .
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Untuk source code nya bisa sobat cek langsung di github saya [neovim-setup](https://github.com/RezaIchsani/neovim-setup). Terima kasih, semoga bermanfaat ya sob :) .
