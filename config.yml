@@ -43,7 +43,7 @@ params:
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: false
   UseHugoToc: true
-  comments: false
+  comments: true
   showtoc: false
   tocopen: false
 
