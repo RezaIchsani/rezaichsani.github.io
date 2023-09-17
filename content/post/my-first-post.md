@@ -6,5 +6,4 @@ categories: ["first"]
 tags: ["fisrt post"]
 ---
 
-Hai sob ini adalah post pertama saya :)
-
+Hai 2 sob ini adalah post pertama saya :)
