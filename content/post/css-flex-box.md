@@ -53,3 +53,31 @@ Contoh :
   </body>
 </html>
 ```
+
+## Jenis-jenis Flexbox Property
+
+Property untuk flexbox dapat dibagi menjadi 2 kelompok, yakni property untuk flex container, dan property untuk flex item.
+
+Flex container adalah element yang menampung semua flex item. Property yang ditulis kedalam flex container akan berpengaruh secara global.
+
+Sedangkan flex item adalah sebutan dari setiap child element yang berada di dalam flex container.
+
+Pada kode HTML diatas, box 1, box 2 dan box 3 adalah flex item.
+
+**Property untuk flex container:**
+
+- `flex-direction`
+- `flex-wrap`
+- `flex-flow` _shorthand_
+- `justify-content`
+- `align-items`
+- `align-content`
+
+**Property untuk flex item:**
+
+- `order`
+- `flex-grow`
+- `flex-basis`
+- `flex` _shorthand_
+
+## Property flex-direction
