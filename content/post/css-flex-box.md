@@ -54,6 +54,10 @@ Contoh :
 </html>
 ```
 
+Preview :
+
+https://codepen.io/rezaichsani/full/mdaqdwy
+
 ## Jenis-jenis Flexbox Property
 
 Property untuk flexbox dapat dibagi menjadi 2 kelompok, yakni property untuk flex container, dan property untuk flex item.
