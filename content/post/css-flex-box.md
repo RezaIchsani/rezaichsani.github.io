@@ -1,6 +1,6 @@
 ---
 title: 'CSS Flexbox'
-date: 2023-03-22T11:44:12+07:00
+date: 2023-09-18
 draft: false
 weight: 1
 categories: ['Programming']
