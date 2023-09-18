@@ -186,3 +186,9 @@ Jika **flex container** di set dengan `flex-wrap: nowrap`, maka **flex item** ak
 Selain itu, apabila lebar **flex item** di set langsung dengan property `width`, pengaturan `flex-wrap: nowrap` akan menganggap `width` tersebut sebagai `max-width` dan masih bisa "dipaksa" untuk mengecil.
 
 ## Property flex-flow
+
+<iframe height="300" style="width: 100%;" scrolling="no" title="Untitled" src="https://codepen.io/rezaichsani/embed/QOegzz?default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href="https://codepen.io/rezaichsani/pen/QOegzz">
+  Untitled</a> by Muhammad Reza Ichsani (<a href="https://codepen.io/rezaichsani">@rezaichsani</a>)
+  on <a href="https://codepen.io">CodePen</a>.
+</iframe>
