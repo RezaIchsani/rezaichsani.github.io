@@ -1,6 +1,6 @@
 ---
 title: 'Cara Mengatasi "No ESLint Configuration Found"'
-date: 2023-03-24
+date: 2023-09-24
 draft: false
 weight: 1
 categories: ['Programming']
