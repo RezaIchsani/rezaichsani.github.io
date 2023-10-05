@@ -1,6 +1,6 @@
 ---
 title: 'Operator Pada JavaScript'
-date: 2023-10-24
+date: 2023-10-05
 draft: false
 weight: 1
 categories: ['Programming']
