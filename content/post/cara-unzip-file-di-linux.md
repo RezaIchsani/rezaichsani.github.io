@@ -22,3 +22,17 @@ atau
 ```
 unzip file.zip -d /var/www/
 ```
+
+Contoh 
+
+```
+unzip wordpress.org -d /opt/lampp/htdocs/
+```
+
+Setelah itu, kita bisa merename folder aslinya dengan perintah:
+
+```
+mv wordpress octavia
+```
+
+Perintah tersebut akan merename folder "wordpress" menjadi "octavia".
