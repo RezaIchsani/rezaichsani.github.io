@@ -1,6 +1,6 @@
 ---
 title: 'Cara Unzip File di Linux dengan Command Line'
-date: 2024-01-62
+date: 2024-01-02
 draft: false
 weight: 1
 categories: ['CLI']
